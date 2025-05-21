@@ -6,25 +6,27 @@
   <title>Carrito de Compras</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    /* Estilos (igual que antes, sin cambios) */
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f5f5f5;
       margin: 0;
       padding: 0;
     }
+
     header, footer {
       background-color: #bdbdbd;
       color: #fff;
       text-align: center;
       padding: 1rem 0;
     }
+
     header a {
       color: #070707;
       text-decoration: none;
       display: block;
       margin-top: 10px;
     }
+
     main {
       max-width: 800px;
       margin: 2rem auto;
@@ -33,18 +35,28 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    h1, h2, h3 { color: #333; }
-    ul { list-style: none; padding-left: 0; }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
     ul li {
       margin-bottom: 10px;
       padding: 8px;
       background-color: #f0f0f0;
       border-radius: 5px;
     }
+
     .resumen p, .resumen h3 {
       font-size: 1.1rem;
       margin: 8px 0;
     }
+
     form input, form select {
       display: block;
       width: 100%;
@@ -54,6 +66,7 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+
     .form-extra {
       margin-top: 1rem;
       background-color: #f9f9f9;
@@ -61,6 +74,7 @@
       border-radius: 8px;
       border: 1px solid #ddd;
     }
+
     button {
       background-color: #28a745;
       color: white;
@@ -71,9 +85,11 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
+
     button:hover {
       background-color: #218838;
     }
+
     footer p {
       margin: 0;
       font-size: 0.9rem;
@@ -87,206 +103,155 @@
   </header>
 
   <main>
-    <h2>Productos en tu carrito</h2>
-    <ul id="carrito-lista"></ul>
+  <h2>Productos en tu carrito</h2>
+  <ul id="carrito-lista"></ul>
 
-    <div class="resumen">
-      <p>Subtotal: $<span id="subtotal">0.00</span></p>
-      <p>IVA (16%): $<span id="iva">0.00</span></p>
-      <h3>Total: $<span id="total">0.00</span></h3>
-      <button id="vaciar-carrito" style="background-color:#dc3545;">🗑️ Vaciar carrito</button>
+  <div class="resumen">
+    <p>Subtotal: $<span id="subtotal">0.00</span></p>
+    <p>IVA (16%): $<span id="iva">0.00</span></p>
+    <h3>Total: $<span id="total">0.00</span></h3>
+    <button id="vaciar-carrito" style="background-color:#dc3545;">🗑️ Vaciar carrito</button>
+  </div>
+
+  <hr>
+
+  <h2>Finalizar compra</h2>
+  <form id="formulario-pago">
+    <input type="text" placeholder="Nombre completo" required />
+    <input type="email" placeholder="Correo electrónico" required />
+    <input type="text" placeholder="Dirección de envío" required />
+
+    <select id="metodo-pago" required>
+      <option value="">Selecciona método de pago</option>
+      <option value="tarjeta">Tarjeta de crédito</option>
+      <option value="paypal">PayPal</option>
+      <option value="oxxo">OXXO</option>
+    </select>
+
+    <div id="pago-tarjeta" class="form-extra" style="display: none;">
+      <input type="text" placeholder="Nombre en la tarjeta" />
+      <input type="text" placeholder="Número de tarjeta" />
+      <input type="text" placeholder="MM/AA" />
+      <input type="text" placeholder="CVV" />
     </div>
 
-    <hr>
+    <div id="pago-paypal" class="form-extra" style="display: none;">
+      <input type="email" placeholder="Correo de PayPal" />
+    </div>
 
-    <h2>Finalizar compra</h2>
-    <form id="formulario-pago">
-      <input type="text" placeholder="Nombre completo" required />
-      <input type="email" placeholder="Correo electrónico" required />
-      <input type="text" placeholder="Dirección de envío" required />
+    <div id="pago-oxxo" class="form-extra" style="display: none;">
+      <input type="text" placeholder="Nombre del comprador" />
+      <input type="text" placeholder="CURP" />
+    </div>
 
-      <select id="metodo-pago" required>
-        <option value="">Selecciona método de pago</option>
-        <option value="tarjeta">Tarjeta de crédito</option>
-        <option value="paypal">PayPal</option>
-        <option value="oxxo">OXXO</option>
-      </select>
+    <button type="submit">Pagar</button>
+  </form>
+</main>
 
-      <div id="pago-tarjeta" class="form-extra" style="display: none;">
-        <input type="text" placeholder="Nombre en la tarjeta" />
-        <input type="text" placeholder="Número de tarjeta" />
-        <input type="text" placeholder="MM/AA" />
-        <input type="text" placeholder="CVV" />
-      </div>
-
-      <div id="pago-paypal" class="form-extra" style="display: none;">
-        <input type="email" placeholder="Correo de PayPal" />
-      </div>
-
-      <div id="pago-oxxo" class="form-extra" style="display: none;">
-        <input type="text" placeholder="Nombre del comprador" />
-        <input type="text" placeholder="CURP" />
-      </div>
-
-      <button type="submit">Pagar</button>
-    </form>
-  </main>
 
   <footer>
     <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Supabase SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = supabase.createClient(
-      'https://TU-PROYECTO.supabase.co', // 🔁 reemplaza con tu URL
-      'TU-CLAVE-ANON'                     // 🔁 reemplaza con tu anon public key
-    );
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const lista = document.getElementById("carrito-lista");
+  const subtotalEl = document.getElementById("subtotal");
+  const ivaEl = document.getElementById("iva");
+  const totalEl = document.getElementById("total");
+  const vaciarBtn = document.getElementById("vaciar-carrito");
 
-    const lista = document.getElementById("carrito-lista");
-    const subtotalEl = document.getElementById("subtotal");
-    const ivaEl = document.getElementById("iva");
-    const totalEl = document.getElementById("total");
-    const vaciarBtn = document.getElementById("vaciar-carrito");
+  function renderizarCarrito() {
+    lista.innerHTML = "";
+    let subtotal = 0;
 
-    function renderizarCarrito() {
-      lista.innerHTML = "";
-      let subtotal = 0;
+    carrito.forEach((producto, index) => {
+      const li = document.createElement("li");
 
-      carrito.forEach((producto, index) => {
-        const li = document.createElement("li");
-        const cantidad = producto.cantidad || 1;
-        const totalProducto = producto.precio * cantidad;
-        subtotal += totalProducto;
+      const cantidad = producto.cantidad || 1;
+      const totalProducto = producto.precio * cantidad;
+      subtotal += totalProducto;
 
-        li.innerHTML = `
-          <strong>${producto.nombre}</strong> - $${producto.precio} x 
-          <input type="number" min="1" value="${cantidad}" data-index="${index}" style="width:60px"> = 
-          $${totalProducto.toFixed(2)}
-          <button data-index="${index}" class="eliminar" style="margin-left:10px;color:#fff;background-color:#e74c3c;border:none;padding:5px;border-radius:4px;cursor:pointer;">Eliminar</button>
-        `;
+      li.innerHTML = `
+        <strong>${producto.nombre}</strong> - $${producto.precio} x 
+        <input type="number" min="1" value="${cantidad}" data-index="${index}" style="width:60px"> = 
+        $${totalProducto.toFixed(2)}
+        <button data-index="${index}" class="eliminar" style="margin-left:10px;color:#fff;background-color:#e74c3c;border:none;padding:5px;border-radius:4px;cursor:pointer;">Eliminar</button>
+      `;
 
-        lista.appendChild(li);
-      });
+      lista.appendChild(li);
+    });
 
-      const iva = subtotal * 0.16;
-      const total = subtotal + iva;
+    const iva = subtotal * 0.16;
+    const total = subtotal + iva;
 
-      subtotalEl.textContent = subtotal.toFixed(2);
-      ivaEl.textContent = iva.toFixed(2);
-      totalEl.textContent = total.toFixed(2);
+    subtotalEl.textContent = subtotal.toFixed(2);
+    ivaEl.textContent = iva.toFixed(2);
+    totalEl.textContent = total.toFixed(2);
 
-      localStorage.setItem("carrito", JSON.stringify(carrito));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }
+
+  // Cambiar cantidad
+  lista.addEventListener("input", (e) => {
+    if (e.target.type === "number") {
+      const index = e.target.dataset.index;
+      carrito[index].cantidad = parseInt(e.target.value) || 1;
+      renderizarCarrito();
     }
+  });
 
-    // Cambiar cantidad
-    lista.addEventListener("input", (e) => {
-      if (e.target.type === "number") {
-        const index = e.target.dataset.index;
-        carrito[index].cantidad = parseInt(e.target.value) || 1;
-        renderizarCarrito();
-      }
-    });
+  // Eliminar producto
+  lista.addEventListener("click", (e) => {
+    if (e.target.classList.contains("eliminar")) {
+      const index = e.target.dataset.index;
+      carrito.splice(index, 1);
+      renderizarCarrito();
+    }
+  });
 
-    // Eliminar producto
-    lista.addEventListener("click", (e) => {
-      if (e.target.classList.contains("eliminar")) {
-        const index = e.target.dataset.index;
-        carrito.splice(index, 1);
-        renderizarCarrito();
-      }
-    });
-
-    // Vaciar carrito
-    vaciarBtn.addEventListener("click", () => {
-      if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
-        carrito = [];
-        renderizarCarrito();
-      }
-    });
-
-    // Mostrar métodos de pago
-    const metodoPagoSelect = document.getElementById("metodo-pago");
-    const formularios = {
-      tarjeta: document.getElementById("pago-tarjeta"),
-      paypal: document.getElementById("pago-paypal"),
-      oxxo: document.getElementById("pago-oxxo")
-    };
-
-    metodoPagoSelect.addEventListener("change", function () {
-      const metodo = this.value;
-      Object.values(formularios).forEach(div => {
-        div.style.display = "none";
-        div.querySelectorAll("input").forEach(input => input.required = false);
-      });
-
-      if (formularios[metodo]) {
-        formularios[metodo].style.display = "block";
-        formularios[metodo].querySelectorAll("input").forEach(input => input.required = true);
-      }
-    });
-
-    async function registrarCompra() {
-      const nombre = document.querySelector('input[placeholder="Nombre completo"]').value;
-      const correo = document.querySelector('input[placeholder="Correo electrónico"]').value;
-      const direccion = document.querySelector('input[placeholder="Dirección de envío"]').value;
-      const tipoPago = document.getElementById("metodo-pago").value;
-      const requiereCambio = tipoPago === "oxxo" ? true : false;
-
-      const total = carrito.reduce((sum, p) => sum + (p.precio * (p.cantidad || 1)), 0) * 1.16;
-
-      // Insertar pedido
-      const { data: pedido, error: pedidoError } = await supabase
-        .from('pedidos')
-        .insert([{
-          tipo_pago: tipoPago,
-          requiere_cambio: requiereCambio,
-          total: total
-        }])
-        .select()
-        .single();
-
-      if (pedidoError) {
-        console.error("Error al registrar pedido:", pedidoError);
-        alert("❌ Error al registrar el pedido");
-        return;
-      }
-
-      // Insertar productos
-      const detalles = carrito.map(p => ({
-        id_pedido: pedido.id,
-        id_producto: p.id, // Asegúrate de guardar el ID Supabase del producto
-        cantidad: p.cantidad || 1,
-        subtotal: p.precio * (p.cantidad || 1)
-      }));
-
-      const { error: detallesError } = await supabase
-        .from('detalles_pedido')
-        .insert(detalles);
-
-      if (detallesError) {
-        console.error("Error al registrar productos:", detallesError);
-        alert("❌ Error al registrar los productos");
-        return;
-      }
-
-      alert("✅ ¡Compra registrada con éxito!");
+  // Vaciar carrito
+  vaciarBtn.addEventListener("click", () => {
+    if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
       carrito = [];
-      localStorage.removeItem("carrito");
-      window.location.href = "index.html";
+      renderizarCarrito();
     }
+  });
 
-    // Enviar formulario
-    document.getElementById("formulario-pago").addEventListener("submit", function (e) {
-      e.preventDefault();
-      registrarCompra();
+  // Mostrar métodos de pago
+  const metodoPagoSelect = document.getElementById("metodo-pago");
+  const formularios = {
+    tarjeta: document.getElementById("pago-tarjeta"),
+    paypal: document.getElementById("pago-paypal"),
+    oxxo: document.getElementById("pago-oxxo")
+  };
+
+  metodoPagoSelect.addEventListener("change", function () {
+    const metodo = this.value;
+    Object.values(formularios).forEach(div => {
+      div.style.display = "none";
+      div.querySelectorAll("input").forEach(input => input.required = false);
     });
 
-    // Inicializar
-    renderizarCarrito();
-  </script>
+    if (formularios[metodo]) {
+      formularios[metodo].style.display = "block";
+      formularios[metodo].querySelectorAll("input").forEach(input => input.required = true);
+    }
+  });
+
+  // Confirmar pago
+  document.getElementById("formulario-pago").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("✅ ¡Gracias por tu compra!");
+    carrito = [];
+    localStorage.removeItem("carrito");
+    window.location.href = "index.html";
+  });
+
+  // Inicializar
+  renderizarCarrito();
+</script>
+
 </body>
 </html>
