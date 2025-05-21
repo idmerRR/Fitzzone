@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calzado - FITTZONE</title>
+  <link rel="stylesheet" href="nuevo.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="img/logo1.PNG" alt="Logo" /></a>
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="nuevo.html">Nuevo</a>
+      <a href="hombre.html">Hombre</a>
+      <a href="mujer.html">Mujer</a>
+      <a href="accesorios.html">Accesorios</a>
+      <a href="ofertas.html">Ofertas</a>
+    </nav>
+    <div class="icons">
+        <a href="carrito.html" class="icono">🛒</a>
+      </div>
+  </header>
+
+  <main>
+    <h1>Calzado deportivo</h1>
+    <div class="grid">
+      <div class="producto" data-id="1" data-precio="1499">
+        <img src="img/Tennis Nike Air Zoom Hombre.jpg" alt="Tennis Nike Running">
+        <h3>Tennis Nike Air Zoom Hombre</h3>
+        <p>$1499</p>
+        <button onclick="agregarAlCarrito('Tennis Nike Air Zoom Hombre', 1499)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="2" data-precio="1599">
+        <img src="img/Tennis Adidas Ultraboost Mujer.jpg" alt="Tennis Adidas Mujer">
+        <h3>Tennis Adidas Ultraboost Mujer</h3>
+        <p>$1599</p>
+        <button onclick="agregarAlCarrito('Tennis Adidas Ultraboost Mujer', 1599)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="3" data-precio="1299">
+        <img src="img/Botines Puma Future Z.jpg" alt="Botines Puma Fútbol">
+        <h3>Botines Puma Future Z</h3>
+        <p>$1299</p>
+        <button onclick="agregarAlCarrito('Botines Puma Future Z', 1299)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="4" data-precio="1199">
+        <img src="img/Tenis Under Armour Básquet.jpg" alt="Tenis UA Basquet">
+        <h3>Tenis Under Armour Básquet</h3>
+        <p>$1199</p>
+        <button onclick="agregarAlCarrito('Tenis Under Armour Básquet', 1199)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="5" data-precio="999">
+        <img src="img/Tennis Charly Urban Mujer.jpg" alt="Tennis Charly">
+        <h3>Tennis Charly Urban Mujer</h3>
+        <p>$999</p>
+        <button onclick="agregarAlCarrito('Tennis Charly Urban Mujer', 999)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="6" data-precio="1099">
+        <img src="img/Tennis Reebok Training Hombre.jpg" alt="Tennis Reebok Training">
+        <h3>Tennis Reebok Training Hombre</h3>
+        <p>$1099</p>
+        <button onclick="agregarAlCarrito('Tennis Reebok Training Hombre', 1099)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="7" data-precio="1299">
+        <img src="img/Tenis Mizuno Voleibol Mujer.jpg" alt="Tenis Mizuno Voleibol">
+        <h3>Tenis Mizuno Voleibol Mujer</h3>
+        <p>$1299</p>
+        <button onclick="agregarAlCarrito('Tenis Mizuno Voleibol Mujer', 1299)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="8" data-precio="899">
+        <img src="img/Sandalias Lotto Slide Hombre.jpg" alt="Sandalias Lotto">
+        <h3>Sandalias Lotto Slide Hombre</h3>
+        <p>$899</p>
+        <button onclick="agregarAlCarrito('Sandalias Lotto Slide Hombre', 899)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="9" data-precio="799">
+        <img src="img/Zapatilla Charly Confort Mujer.jpg" alt="Zapato deportivo">
+        <h3>Zapatilla Charly Confort Mujer</h3>
+        <p>$799</p>
+        <button onclick="agregarAlCarrito('Zapatilla Charly Confort Mujer', 799)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="10" data-precio="1399">
+        <img src="img/Tenis Adidas Court Hombre.jpg" alt="Tenis Adidas Court">
+        <h3>Tenis Adidas Court Hombre</h3>
+        <p>$1399</p>
+        <button onclick="agregarAlCarrito('Tenis Adidas Court Hombre', 1399)">Agregar al carrito</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      const lista = document.getElementById("lista-carrito");
+      lista.innerHTML = "";
+      let total = 0;
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        const btn = document.createElement("button");
+        btn.textContent = "Eliminar";
+        btn.onclick = () => {
+          carrito.splice(index, 1);
+          renderizarCarrito();
+        };
+        li.appendChild(btn);
+        lista.appendChild(li);
+        total += item.precio;
+      });
+      document.getElementById("total").textContent = total.toFixed(2);
+    }
+  </script>
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      // Cargar carrito existente desde localStorage
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  
+      // Agregar el nuevo producto
+      carrito.push({ nombre, precio });
+  
+      // Guardar carrito actualizado
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+  
+      // Confirmación opcional (puedes quitarlo si no quieres el alert)
+      alert(`Producto agregado al carrito. Total: ${carrito.length}`);
+    }
+  </script>
+  
+</body>
+</html>

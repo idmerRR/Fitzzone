@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mujeres - FITTZONE</title>
+  <link rel="stylesheet" href="nuevo.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="img/logo1.PNG" alt="Logo" /></a>
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="nuevo.html">Nuevo</a>
+      <a href="hombre.html">Hombre</a>
+      <a href="accesorios.html">Accesorios</a>
+      <a href="calzado.html">Calzado</a>
+      <a href="ofertas.html">Ofertas</a>
+    </nav>
+    <div class="icons">
+        <a href="carrito.html" class="icono">🛒</a>
+      </div>
+  </header>
+
+  <main>
+    <h1>Equipamiento deportivo para mujeres</h1>
+    <div class="grid">
+      <div class="producto" data-id="1" data-precio="999">
+        <img src="img/Leggins Adidas Voleibol Mujer.jpg" alt="Leggins Adidas">
+        <h3>Leggins Adidas Voleibol Mujer</h3>
+        <p>$999</p>
+        <button onclick="agregarAlCarrito('Leggins Adidas Voleibol Mujer', 999)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="2" data-precio="1099">
+        <img src="img/Rodilleras Mizuno Femeninas.jpg" alt="Rodilleras Mizuno">
+        <h3>Rodilleras Mizuno Femeninas</h3>
+        <p>$1099</p>
+        <button onclick="agregarAlCarrito('Rodilleras Mizuno Femeninas', 1099)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="3" data-precio="1399">
+        <img src="img/Tennis Nike Fútbol Mujer.jpg" alt="Tennis Nike Futbol">
+        <h3>Tennis Nike Fútbol Mujer</h3>
+        <p>$1399</p>
+        <button onclick="agregarAlCarrito('Tennis Nike Fútbol Mujer', 1399)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="4" data-precio="1199">
+        <img src="img/Jersey Charly Club Femenino.jpg" alt="Jersey Charly">
+        <h3>Jersey Charly Club Femenino</h3>
+        <p>$1199</p>
+        <button onclick="agregarAlCarrito('Jersey Charly Club Femenino', 1199)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="5" data-precio="899">
+        <img src="img/Top Deportivo Puma Básquet.jpg" alt="Top Puma">
+        <h3>Top Deportivo Puma Básquet</h3>
+        <p>$899</p>
+        <button onclick="agregarAlCarrito('Top Deportivo Puma Básquet', 899)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="6" data-precio="999">
+        <img src="img/Balón Spalding Básquet Femenino.jpg" alt="Balón Spalding">
+        <h3>Balón Spalding Básquet Femenino</h3>
+        <p>$999</p>
+        <button onclick="agregarAlCarrito('Balón Spalding Básquet Femenino', 999)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="7" data-precio="1599">
+        <img src="img/Casco Under Armour Americano Mujer.jpg" alt="Casco Americano">
+        <h3>Casco Under Armour Americano Mujer</h3>
+        <p>$1599</p>
+        <button onclick="agregarAlCarrito('Casco Under Armour Americano Mujer', 1599)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="8" data-precio="699">
+        <img src="img/Guantes UA Grip Fútbol Americano.jpg" alt="Guantes UA">
+        <h3>Guantes UA Grip Fútbol Americano</h3>
+        <p>$699</p>
+        <button onclick="agregarAlCarrito('Guantes UA Grip Fútbol Americano', 699)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="9" data-precio="749">
+        <img src="img/Guante Beisbol Reebok Mujer.jpg" alt="Guante Beisbol">
+        <h3>Guante Beisbol Reebok Mujer</h3>
+        <p>$749</p>
+        <button onclick="agregarAlCarrito('Guante Beisbol Reebok Mujer', 749)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="10" data-precio="849">
+        <img src="img/Pantalón Deportivo Lotto Mujer.jpg" alt="Pantalón Lotto">
+        <h3>Pantalón Deportivo Lotto Mujer</h3>
+        <p>$849</p>
+        <button onclick="agregarAlCarrito('Pantalón Deportivo Lotto Mujer', 849)">Agregar al carrito</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      const lista = document.getElementById("lista-carrito");
+      lista.innerHTML = "";
+      let total = 0;
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        const btn = document.createElement("button");
+        btn.textContent = "Eliminar";
+        btn.onclick = () => {
+          carrito.splice(index, 1);
+          renderizarCarrito();
+        };
+        li.appendChild(btn);
+        lista.appendChild(li);
+        total += item.precio;
+      });
+      document.getElementById("total").textContent = total.toFixed(2);
+    }
+  </script>
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      // Cargar carrito existente desde localStorage
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  
+      // Agregar el nuevo producto
+      carrito.push({ nombre, precio });
+  
+      // Guardar carrito actualizado
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+  
+      // Confirmación opcional (puedes quitarlo si no quieres el alert)
+      alert(`Producto agregado al carrito. Total: ${carrito.length}`);
+    }
+  </script>
+  
+</body>
+</html>

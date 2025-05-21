@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FITTZONE</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="img/logo1.PNG" alt="Mi Tienda Logo">
+    </div>
+    <nav>
+      <a href="nuevo.html">Nuevo</a>
+      <a href="hombre.html">Hombre</a>
+      <a href="mujer.html">Mujer</a>
+      <a href="accesorios.html">Accesorios</a>
+      <a href="calzado.html">Calzado</a>
+      <a href="ofertas.html">Ofertas</a>
+    </nav>
+    <div class="icons">
+        
+        <a href="carrito.html" class="icono">🛒</a>
+        <span class="icono" onclick="toggleSeccion('login')">👤</span>
+      </div>
+      
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>TU ESTILO<br />TU RECOMPENSA</h1>
+      <p class="cond">Consulta términos y condiciones. Envío gratis desde $1,599.</p>
+    </div>
+  </section>
+
+  <!-- Sección de búsqueda -->
+  <section id="busqueda" style="display: none;">
+    <input type="text" placeholder="Buscar productos..." />
+  </section>
+
+  <!-- MODAL: Carrito de compras -->
+  <div id="modal-carrito" class="modal">
+    <div class="modal-content">
+      <span class="cerrar" onclick="cerrarModal('modal-carrito')">&times;</span>
+      <h2>Carrito de Compras</h2>
+      <ul id="carrito-lista"></ul>
+      <p>Total: $<span id="carrito-total">0</span></p>
+    </div>
+  </div>
+
+  <!-- MODAL: Inicio de sesión / Registro -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <span class="cerrar" onclick="cerrarModal('modal-login')">&times;</span>
+      <h2>Iniciar Sesión</h2>
+      <input type="email" placeholder="Correo electrónico" />
+      <input type="password" placeholder="Contraseña" />
+      <button>Entrar</button>
+      <hr>
+      <h3>¿No tienes cuenta?</h3>
+      <input type="text" placeholder="Nombre completo" />
+      <input type="email" placeholder="Correo nuevo" />
+      <input type="password" placeholder="Crear contraseña" />
+      <button>Registrarse</button>
+    </div>
+  </div>
+
+  <footer>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/share/1BgQKwXmB9/?mibextid=wwXIfr" target="_blank" title="Facebook">
+      <img src="img/facebook.jpg" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/fitzzonegearoficial?igsh=d3lqOTIwdjhhM2Nt&utm_source=qr" target="_blank" title="Instagram">
+      <img src="img/instagram.jpg" alt="Instagram">
+    </a>
+    <a href="https://www.tiktok.com/@fitzzonegear?_t=ZS-8wWZGwznAsz&_r=1" target="_blank" title="TikTok">
+      <img src="img/tiktok.png" alt="TikTok">
+    </a>
+    <a href="https://wa.me/527681156409" target="_blank" title="WhatsApp">
+      <img src="img/whatsapp.png" alt="WhatsApp">
+    </a>
+  </div>
+  <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
+</footer>
+
+
+
+  <!-- Scripts -->
+  <script src="slider.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    function toggleSeccion(id) {
+      if (id === "carrito") {
+        mostrarCarrito();
+        document.getElementById("modal-carrito").style.display = "block";
+      } else if (id === "login") {
+        document.getElementById("modal-login").style.display = "block";
+      }
+    }
+
+    function mostrarBusqueda() {
+      document.getElementById("busqueda").style.display = "block";
+    }
+
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    function mostrarCarrito() {
+      const lista = document.getElementById("carrito-lista");
+      const total = document.getElementById("carrito-total");
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      lista.innerHTML = "";
+      let suma = 0;
+
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        const btn = document.createElement("button");
+        btn.textContent = "Eliminar";
+        btn.onclick = () => {
+          carrito.splice(index, 1);
+          localStorage.setItem("carrito", JSON.stringify(carrito));
+          mostrarCarrito();
+        };
+        li.appendChild(btn);
+        lista.appendChild(li);
+        suma += item.precio;
+      });
+
+      total.textContent = suma.toFixed(2);
+    }
+  </script>
+  <script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="V1mvyrpl_DroJKWlEGWrz";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+</body>
+</html>

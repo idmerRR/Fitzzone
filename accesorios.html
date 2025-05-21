@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accesorios - FITTZONE</title>
+  <link rel="stylesheet" href="nuevo.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="img/logo1.PNG" alt="Logo" /></a>
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="nuevo.html">Nuevo</a>
+      <a href="hombre.html">Hombre</a>
+      <a href="mujer.html">Mujer</a>
+      <a href="calzado.html">Calzado</a>
+      <a href="ofertas.html">Ofertas</a>
+    </nav>
+    <div class="icons">
+        <a href="carrito.html" class="icono">🛒</a>
+      </div>
+  </header>
+
+  <main>
+    <h1>Accesorios deportivos para todos</h1>
+    <div class="grid">
+      <div class="producto" data-id="1" data-precio="599">
+        <img src="img/Gorra Nike Unisex.jpg" alt="Gorra Nike">
+        <h3>Gorra Nike Unisex</h3>
+        <p>$599</p>
+        <button onclick="agregarAlCarrito('Gorra Nike Unisex', 599)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="2" data-precio="499">
+        <img src="img/Cinturón de fuerza Charly.jpg" alt="Cinturón Charly">
+        <h3>Cinturón de fuerza Charly</h3>
+        <p>$499</p>
+        <button onclick="agregarAlCarrito('Cinturón de fuerza Charly', 499)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="3" data-precio="199">
+        <img src="img/Muñequeras Reebok Mujer.jpg" alt="Muñequeras Reebok">
+        <h3>Muñequeras Reebok Mujer</h3>
+        <p>$199</p>
+        <button onclick="agregarAlCarrito('Muñequeras Reebok Mujer', 199)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="4" data-precio="299">
+        <img src="img/Rodilleras Lotto Hombre.jpg" alt="Rodilleras Lotto">
+        <h3>Rodilleras Lotto Hombre</h3>
+        <p>$299</p>
+        <button onclick="agregarAlCarrito('Rodilleras Lotto Hombre', 299)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="5" data-precio="799">
+        <img src="img/Mochila Puma Training.jpg" alt="Mochila Puma">
+        <h3>Mochila Puma Training</h3>
+        <p>$799</p>
+        <button onclick="agregarAlCarrito('Mochila Puma Training', 799)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="6" data-precio="1099">
+        <img src="img/Lentes deportivos Oakley.jpg" alt="Lentes Oakley">
+        <h3>Lentes deportivos Oakley</h3>
+        <p>$1099</p>
+        <button onclick="agregarAlCarrito('Lentes deportivos Oakley', 1099)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="7" data-precio="699">
+        <img src="img/Guantes Under Armour Unisex.jpg" alt="Guantes Under Armour">
+        <h3>Guantes Under Armour Unisex</h3>
+        <p>$699</p>
+        <button onclick="agregarAlCarrito('Guantes Under Armour Unisex', 699)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="8" data-precio="299">
+        <img src="img/Tobilleras Mizuno Mujer.jpg" alt="Tobilleras Mizuno">
+        <h3>Tobilleras Mizuno Mujer</h3>
+        <p>$299</p>
+        <button onclick="agregarAlCarrito('Tobilleras Mizuno Mujer', 299)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="9" data-precio="119">
+        <img src="img/Cuerda para saltar Adidas.jpg" alt="Cuerda para saltar">
+        <h3>Cuerda para saltar Adidas</h3>
+        <p>$119</p>
+        <button onclick="agregarAlCarrito('Cuerda para saltar Adidas', 119)">Agregar al carrito</button>
+      </div>
+      <div class="producto" data-id="10" data-precio="450">
+        <img src="img/Botella Wilson Hidratación.jpg" alt="Botella Wilson">
+        <h3>Botella Wilson Hidratación</h3>
+        <p>$450</p>
+        <button onclick="agregarAlCarrito('Botella Wilson Hidratación', 450)">Agregar al carrito</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      const lista = document.getElementById("lista-carrito");
+      lista.innerHTML = "";
+      let total = 0;
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        const btn = document.createElement("button");
+        btn.textContent = "Eliminar";
+        btn.onclick = () => {
+          carrito.splice(index, 1);
+          renderizarCarrito();
+        };
+        li.appendChild(btn);
+        lista.appendChild(li);
+        total += item.precio;
+      });
+      document.getElementById("total").textContent = total.toFixed(2);
+    }
+  </script>
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      // Cargar carrito existente desde localStorage
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  
+      // Agregar el nuevo producto
+      carrito.push({ nombre, precio });
+  
+      // Guardar carrito actualizado
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+  
+      // Confirmación opcional (puedes quitarlo si no quieres el alert)
+      alert(`Producto agregado al carrito. Total: ${carrito.length}`);
+    }
+  </script>
+  
+</body>
+</html>
