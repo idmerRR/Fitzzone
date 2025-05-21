@@ -18,91 +18,75 @@
       <a href="mujer.html">Mujer</a>
       <a href="accesorios.html">Accesorios</a>
       <a href="calzado.html">Calzado</a>
-      
     </nav>
     <div class="icons">
-        <a href="carrito.html" class="icono">🛒</a>
-      </div>
+      <a href="carrito.html" class="icono">🛒</a>
+    </div>
   </header>
 
   <main>
     <h1>Ofertas especiales</h1>
-    <div class="grid">
-      <div class="producto" data-id="1" data-precio="999">
-        <img src="img/playera tigres.jpg" alt="Playera Tigres">
-        <h3>Playera Tigres UANL (antes $1399)</h3>
-        <p><strong>$999</strong></p>
-        <button onclick="agregarAlCarrito('Playera Tigres UANL', 999)">Agregar al carrito</button>
-      </div>
-      <div class="producto" data-id="2" data-precio="849">
-        <img src="img/playera chivas.jpg" alt="Playera Chivas">
-        <h3>Playera Club Deportivo Guadalajara (antes $1099)</h3>
-        <p><strong>$849</strong></p>
-        <button onclick="agregarAlCarrito('Playera Club Deportivo Guadalajara', 849)">Agregar al carrito</button>
-      </div>
-      <div class="producto" data-id="3" data-precio="600">
-        <img src="img/gorra LA.jpg" alt="Gorra LA">
-        <h3>Gorra LA New Era (antes $1000)</h3>
-        <p><strong>$600</strong></p>
-        <button onclick="agregarAlCarrito('Gorra NY New Era', 600)">Agregar al carrito</button>
-      </div>
-      <div class="producto" data-id="4" data-precio="599">
-        <img src="img/guantes everlast.jpg" alt="Guantes Everlast">
-        <h3>Guantes Everlast (antes $799)</h3>
-        <p><strong>$599</strong></p>
-        <button onclick="agregarAlCarrito('Guantes Everlast', 599)">Agregar al carrito</button>
-      </div>
-
-    
+    <div class="grid" id="productos-grid">
+      <!-- Aquí se insertarán los productos dinámicamente -->
+    </div>
   </main>
 
   <footer>
     <p>© 2025 FITTZONE GEAR. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    let carrito = [];
+    const supabase = supabase.createClient(
+      'https://jjxlaxzaivdfstfjpxmp.supabase.co', // 🔁 Reemplaza con tu URL
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqeGxheHphaXZkZnN0ZmpweG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MzY1MTMsImV4cCI6MjA2MzQxMjUxM30.gsqQOzqJLODXwOW6pjU1P3RgfKKFyPcZgxXRNBJH4ag'                    // 🔁 Reemplaza con tu anon public key
+    );
 
-    function agregarAlCarrito(nombre, precio) {
-      carrito.push({ nombre, precio });
-      renderizarCarrito();
-    }
+    // Función para cargar productos desde Supabase
+    async function cargarProductos() {
+      const { data: productos, error } = await supabase
+        .from('productos')
+        .select('*')
+        .limit(10); // Opcional
 
-    function renderizarCarrito() {
-      const lista = document.getElementById("lista-carrito");
-      lista.innerHTML = "";
-      let total = 0;
-      carrito.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.textContent = `${item.nombre} - $${item.precio}`;
-        const btn = document.createElement("button");
-        btn.textContent = "Eliminar";
-        btn.onclick = () => {
-          carrito.splice(index, 1);
-          renderizarCarrito();
-        };
-        li.appendChild(btn);
-        lista.appendChild(li);
-        total += item.precio;
+      if (error) {
+        console.error('Error al cargar productos:', error);
+        return;
+      }
+
+      const grid = document.getElementById('productos-grid');
+
+      productos.forEach(producto => {
+        const div = document.createElement('div');
+        div.classList.add('producto');
+        div.innerHTML = `
+          <img src="${producto.imagen_url}" alt="${producto.nombre}">
+          <h3>${producto.nombre}</h3>
+          <p><strong>$${producto.precio}</strong></p>
+          <button onclick='agregarAlCarrito(${JSON.stringify(producto)})'>Agregar al carrito</button>
+        `;
+        grid.appendChild(div);
       });
-      document.getElementById("total").textContent = total.toFixed(2);
     }
-  </script>
-  <script>
-    function agregarAlCarrito(nombre, precio) {
-      // Cargar carrito existente desde localStorage
+
+    // Agregar producto al carrito (con ID real de Supabase)
+    function agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  
-      // Agregar el nuevo producto
-      carrito.push({ nombre, precio });
-  
-      // Guardar carrito actualizado
+
+      const index = carrito.findIndex(p => p.id === producto.id);
+      if (index !== -1) {
+        carrito[index].cantidad += 1;
+      } else {
+        carrito.push({ ...producto, cantidad: 1 });
+      }
+
       localStorage.setItem("carrito", JSON.stringify(carrito));
-  
-      // Confirmación opcional (puedes quitarlo si no quieres el alert)
-      alert(`Producto agregado al carrito. Total: ${carrito.length}`);
+      alert(`✅ Producto agregado al carrito`);
     }
+
+    // Cargar productos al iniciar
+    cargarProductos();
   </script>
-  
 </body>
 </html>
